@@ -1,0 +1,9 @@
+This directory is intended for device drivers that have been moved
+out of the kernel source tree so that they can be built separately.
+
+No drivers have been migrated yet.
+
+TODO:
+- Relocate driver code from usr/src/uts/common/io into subdirectories
+  here.
+- Provide per-driver Makefiles to build them as loadable modules.
