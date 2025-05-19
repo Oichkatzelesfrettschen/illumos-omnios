@@ -31,11 +31,15 @@ personally interesting.
 The [Community guide](https://illumos.org/docs/community/) includes details
 about Mailing Lists and IRC channels.
 
-## Licence
+## License
+
+This project uses the Common Development and Distribution License (CDDL).
+The complete license text is available in
+[`usr/src/OPENSOLARIS.LICENSE`](usr/src/OPENSOLARIS.LICENSE).
 
 Most of the existing code is licensed under the
 [CDDL](https://illumos.org/license/CDDL) and we expect new code will generally
-be under this licence as well. Modifications of existing code may not alter
+be under this license as well. Modifications of existing code may not alter
 the original license terms. Integrations of code from upstream sources that
 use another open source license are generally permissible.
 
