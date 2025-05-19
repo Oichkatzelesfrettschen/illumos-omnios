@@ -31,6 +31,11 @@ personally interesting.
 The [Community guide](https://illumos.org/docs/community/) includes details
 about Mailing Lists and IRC channels.
 
+## Code of Conduct
+
+Participation in this project is governed by our
+[Code of Conduct](CODE_OF_CONDUCT.md).
+
 ## Licence
 
 Most of the existing code is licensed under the
