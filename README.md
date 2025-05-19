@@ -43,3 +43,18 @@ be under this license as well. Modifications of existing code may not alter
 the original license terms. Integrations of code from upstream sources that
 use another open source license are generally permissible.
 
+## libc policies
+
+OmniOS maintains its own policies for the standard C library.  All changes to
+libc must follow the locking and memory allocation rules documented in
+[`usr/src/lib/libc/README`](usr/src/lib/libc/README).
+
+## Hardware variants
+
+Some libraries ship hardware-optimised variants that the runtime linker
+chooses based on CPU capabilities.  The i386 libc Makefiles under
+[`usr/src/lib/libc/i386_hwcap1`](usr/src/lib/libc/i386_hwcap1/Makefile),
+[`i386_hwcap2`](usr/src/lib/libc/i386_hwcap2/Makefile) and
+[`i386_hwcap3`](usr/src/lib/libc/i386_hwcap3/Makefile) illustrate this
+approach.
+
