@@ -1,5 +1,9 @@
-This README is here to keep track of merges from SmartOS
+This README documents the periodic merges from the SmartOS (illumos-joyent) code base into OmniOS.
+These merges bring in fixes and enhancements that have not yet landed in illumos-gate, keeping OmniOS
+up to date with SmartOS developments.
+
+The progress of these merges can be followed on the OmniOS GitHub page:
+https://github.com/omniosorg/illumos-omnios/commits/master
 
 Last illumos-joyent commit: 02e40aba0c436c8e669072bee930c9e55294f062
-
 
