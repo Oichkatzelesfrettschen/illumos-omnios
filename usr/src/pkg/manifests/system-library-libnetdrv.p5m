@@ -1,0 +1,8 @@
+set name=pkg.fmri value=pkg:/system/library/libnetdrv@$(PKGVERS)
+set name=pkg.summary value="Network driver client library"
+set name=variant.arch value=$(ARCH)
+link path=lib/$(ARCH64)/libnetdrv.so target=libnetdrv.so.1
+file path=lib/$(ARCH64)/libnetdrv.so.1
+link path=lib/libnetdrv.so target=libnetdrv.so.1
+file path=lib/libnetdrv.so.1
+license lic_CDDL license=lic_CDDL

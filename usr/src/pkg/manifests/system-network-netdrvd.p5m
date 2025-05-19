@@ -1,0 +1,5 @@
+set name=pkg.fmri value=pkg:/system/network/netdrvd@$(PKGVERS)
+set name=pkg.summary value="User-space network driver daemon"
+set name=variant.arch value=$(ARCH)
+file path=usr/lib/netdrvd mode=0555
+license lic_CDDL license=lic_CDDL
