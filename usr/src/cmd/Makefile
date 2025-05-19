@@ -482,6 +482,8 @@ COMMON_SUBDIRS=		\
 	zonestat	\
 	zstreamdump	\
 	ztest
+	netdrvd	\
+	userfsd
 
 i386_SUBDIRS=		\
 	acpi		\

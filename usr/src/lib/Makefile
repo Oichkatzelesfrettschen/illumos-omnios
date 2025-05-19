@@ -272,6 +272,7 @@ SUBDIRS +=				\
 	udapl		\
 	varpd		\
 	watchmalloc	\
+	libnetdrv	\
 	$($(MACH)_SUBDIRS)
 
 i386_SUBDIRS=		\

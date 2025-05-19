@@ -1,0 +1,5 @@
+set name=pkg.fmri value=pkg:/system/filesystem/userfsd@$(PKGVERS)
+set name=pkg.summary value="User filesystem service"
+set name=variant.arch value=$(ARCH)
+file path=usr/lib/userfsd mode=0555
+license lic_CDDL license=lic_CDDL
