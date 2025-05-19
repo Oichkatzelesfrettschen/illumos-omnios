@@ -58,3 +58,17 @@ chooses based on CPU capabilities.  The i386 libc Makefiles under
 [`i386_hwcap3`](usr/src/lib/libc/i386_hwcap3/Makefile) illustrate this
 approach.
 
+
+## Exokernel Prototype
+
+A minimal kernel derived from the traditional `uts` sources lives under
+`usr/src/exokernel` with supporting subsystems in `usr/src/modules`.
+To build the prototype exokernel:
+
+```
+cd usr/src/exokernel
+make
+```
+
+More information about the layout and goals can be found in
+[`docs/exokernel/README.md`](docs/exokernel/README.md).
