@@ -36,6 +36,7 @@
 #include <sys/socketvar.h>
 #include <fs/sockfs/sockcommon.h>
 #include <fs/sockfs/sockfilter_impl.h>
+#include <stdbool.h>
 
 /*
  * Socket Filter Framework
@@ -94,7 +95,7 @@ static sof_kstat_t	sof_stat;
 static kstat_t		*sof_stat_ksp;
 
 #ifdef DEBUG
-static int socket_filter_debug = 0;
+static bool socket_filter_debug = false;
 #endif
 
 /*
