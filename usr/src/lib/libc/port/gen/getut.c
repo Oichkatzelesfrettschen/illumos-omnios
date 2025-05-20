@@ -159,7 +159,7 @@ getutent_frec(void)
 	/* Try to read in the next entry from the utmp file.  */
 
 	if (read(fd, &fubuf, sizeof (fubuf)) != sizeof (fubuf)) {
-		bzero(&fubuf, sizeof (fubuf));
+               memset(&fubuf, 0, sizeof (fubuf));
 		return (NULL);
 	}
 
@@ -398,8 +398,8 @@ _compat_setutent(void)
 	 * Zero the stored copy of the last entry read, since we are
 	 * resetting to the beginning of the file.
 	 */
-	bzero(&ubuf, sizeof (ubuf));
-	bzero(&fubuf, sizeof (fubuf));
+   memset(&ubuf, 0, sizeof (ubuf));
+   memset(&fubuf, 0, sizeof (fubuf));
 }
 
 /*
@@ -411,8 +411,8 @@ _compat_endutent(void)
 	if (fd != -1)
 		(void) close(fd);
 	fd = -1;
-	bzero(&ubuf, sizeof (ubuf));
-	bzero(&fubuf, sizeof (fubuf));
+   memset(&ubuf, 0, sizeof (ubuf));
+   memset(&fubuf, 0, sizeof (fubuf));
 }
 
 

@@ -18,6 +18,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <string.h>
 #include <strings.h>
 #include <dirent.h>
 
@@ -69,7 +70,7 @@ inotify_add_watch(int fd, const char *pathname, uint32_t mask)
 		return (-1);
 	}
 
-	bzero(&ioc, sizeof (ioc));
+       memset(&ioc, 0, sizeof (ioc));
 	ioc.inaw_fd = dirfd;
 	ioc.inaw_mask = mask;
 
@@ -96,7 +97,7 @@ inotify_add_watch(int fd, const char *pathname, uint32_t mask)
 		return (-1);
 	}
 
-	bzero(&cioc, sizeof (cioc));
+       memset(&cioc, 0, sizeof (cioc));
 	cioc.inac_fd = dirfd;
 
 	while ((dp = readdir(dir)) != NULL) {

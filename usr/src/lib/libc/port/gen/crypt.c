@@ -36,6 +36,7 @@
 #include <dlfcn.h>
 #include <errno.h>
 #include <stdio.h>
+#include <string.h>
 #include <strings.h>
 #include <stdlib.h>
 #include <sys/time.h>
@@ -152,7 +153,7 @@ crypt(const char *plaintext, const char *salt)
 	ctbuffer = tsdalloc(_T_CRYPT, CRYPT_MAXCIPHERTEXTLEN, NULL);
 	if (ctbuffer == NULL)
 		return (NULL);
-	bzero(ctbuffer, CRYPT_MAXCIPHERTEXTLEN);
+       memset(ctbuffer, 0, CRYPT_MAXCIPHERTEXTLEN);
 
 	/*
 	 * '$' is never a possible salt char with the traditional unix
@@ -708,19 +709,19 @@ free_crypt_policy(struct crypt_policy_s *policy)
 		return;
 
 	if (policy->cp_default != NULL) {
-		bzero(policy->cp_default, strlen(policy->cp_default));
+               memset(policy->cp_default, 0, strlen(policy->cp_default));
 		free(policy->cp_default);
 		policy->cp_default = NULL;
 	}
 
 	if (policy->cp_allow != NULL) {
-		bzero(policy->cp_allow, strlen(policy->cp_allow));
+               memset(policy->cp_allow, 0, strlen(policy->cp_allow));
 		free(policy->cp_allow);
 		policy->cp_allow = NULL;
 	}
 
 	if (policy->cp_deny != NULL) {
-		bzero(policy->cp_deny, strlen(policy->cp_deny));
+               memset(policy->cp_deny, 0, strlen(policy->cp_deny));
 		free(policy->cp_deny);
 		policy->cp_deny = NULL;
 	}

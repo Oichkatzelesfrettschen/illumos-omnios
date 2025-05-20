@@ -33,6 +33,7 @@
 #include "lint.h"
 #include <stdarg.h>
 #include <strings.h>
+#include <string.h>
 /* Can't just use <ucontext.h> due to redefine_extname stuff. */
 #include <sys/ucontext.h>
 #include <sys/regset.h>
@@ -87,7 +88,7 @@ makecontext(ucontext_t *ucp, void (*func)(), int argc, ...)
 	 */
 	/* LINTED pointer cast may result in improper alignment */
 	tsp = &((struct frame *)sp)->fr_argd[0];
-	bzero(sp, sizeof (struct frame));
+       memset(sp, 0, sizeof (struct frame));
 
 	va_start(ap, argc);
 
@@ -134,7 +135,7 @@ __makecontext_v2(ucontext_t *ucp, void (*func)(), int argc, ...)
 	 */
 	/* LINTED pointer cast may result in improper alignment */
 	tsp = &((struct frame *)sp)->fr_argd[0];
-	bzero(sp, sizeof (struct frame));
+       memset(sp, 0, sizeof (struct frame));
 
 	va_start(ap, argc);
 
