@@ -279,3 +279,37 @@ In summary, any new function symbol in libc must be scoped protected unless it
 is one of a very small group of functions that must allow interposed versions
 to be bound to from the C library itself -- it is grossly unlikely that more
 of these will occur.
+# Adaptive Spinning and Queue-Based Locks
+
+The pthread locking primitives inside libc employ an adaptive strategy to
+avoid unnecessary context switches when a mutex is contended.  When
+`mutex_lock()` fails to acquire a lock immediately, the code in
+`synch.c` performs a bounded spin loop.  The number of spins is
+controlled by `thread_adaptive_spin` and may be tuned via the
+`_THREAD_ADAPTIVE_SPIN` environment variable.  Threads monitor the
+running state of the current owner through `schedctl` data; spinning
+stops early if the owner is not on a processor.
+
+If the lock still cannot be obtained, or if the owner is off-CPU, the
+implementation falls back to queue-based waiting.  The thread is placed
+on a sleep queue protected by `queue_lock()` and subsequently parked in
+the kernel until it is awakened.  This fallback ensures fairness when
+spinning would be wasteful and avoids starvation for lower priority
+threads.
+
+Lock ownership fields are updated with memory barriers to guarantee
+ordering.  `synch.c` comments note that `mutex_lockw`, `mutex_owner` and
+`mutex_ownerpid` are manipulated such that `mutex_lockw` is set or cleared
+with a memory barrier to prevent reordering of these fields.
+
+During wakeups the code uses `no_preempt()` and `preempt()` to
+temporarily disable preemption around queue operations.  This ensures
+that unparks happen promptly and that the scheduler does not immediately
+context switch away from the thread performing the wakeup.
+
+On highly contended locks the adaptive algorithm is intentionally unfair
+to threads already sleeping in the kernel.  This design keeps throughput
+reasonable for broken programs that serialize heavily.  Priority
+inheritance and priority ceiling semantics are honoured through
+`_ceil_prio_inherit()` and related routines so that threads holding
+mutexes may temporarily execute with elevated priorities when required.
