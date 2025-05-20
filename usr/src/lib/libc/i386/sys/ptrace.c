@@ -416,7 +416,7 @@ FindProc(pid_t pid)
  * Be careful about the linked list; ReleaseProc() changes it.
  */
 static void
-CheckAllProcs()
+CheckAllProcs(void)
 {
 	cstatus_t *cp = childp;
 

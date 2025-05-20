@@ -752,7 +752,7 @@ _pthread_setcleanupinit(void (*func)(void))
 }
 
 void
-_thrp_exit()
+_thrp_exit(void)
 {
 	ulwp_t *self = curthread;
 	uberdata_t *udp = self->ul_uberdata;
@@ -898,7 +898,7 @@ _thrp_exit()
 
 #if defined(DEBUG)
 void
-collect_queue_statistics()
+collect_queue_statistics(void)
 {
 	uberdata_t *udp = curthread->ul_uberdata;
 	ulwp_t *ulwp;
@@ -1194,7 +1194,7 @@ etest(const char *ev)
  * names of the form "LIBTHREAD_*".
  */
 static void
-set_thread_vars()
+set_thread_vars(void)
 {
 	extern const char **_environ;
 	const char **pev;
@@ -1541,7 +1541,7 @@ libc_init(void)
 
 #pragma fini(libc_fini)
 void
-libc_fini()
+libc_fini(void)
 {
 	/*
 	 * If we are doing fini processing for the instance of libc
@@ -1565,7 +1565,7 @@ libc_fini()
  * that is, on the first call to thr_create().
  */
 void
-finish_init()
+finish_init(void)
 {
 	ulwp_t *self = curthread;
 	uberdata_t *udp = self->ul_uberdata;
@@ -1651,7 +1651,7 @@ mark_dead_and_buried(ulwp_t *ulwp)
  * Reset our data structures to reflect one lwp.
  */
 void
-postfork1_child()
+postfork1_child(void)
 {
 	ulwp_t *self = curthread;
 	uberdata_t *udp = self->ul_uberdata;
@@ -1769,13 +1769,13 @@ lwp_self(void)
 #pragma weak _ti_thr_self = thr_self
 #pragma weak pthread_self = thr_self
 thread_t
-thr_self()
+thr_self(void)
 {
 	return (curthread->ul_lwpid);
 }
 
 int
-thr_main()
+thr_main(void)
 {
 	ulwp_t *self = __curthread();
 
@@ -2063,7 +2063,7 @@ _thrp_suspend(thread_t tid, uchar_t whystopped)
  * Suspend all lwps other than ourself in preparation for fork.
  */
 void
-suspend_fork()
+suspend_fork(void)
 {
 	ulwp_t *self = curthread;
 	uberdata_t *udp = self->ul_uberdata;
@@ -2184,7 +2184,7 @@ thr_continue(thread_t tid)
 }
 
 void
-thr_yield()
+thr_yield(void)
 {
 	yield();
 }
@@ -2204,7 +2204,7 @@ thr_kill(thread_t tid, int sig)
  * Called from exit_critical() and from sigon().
  */
 void
-do_exit_critical()
+do_exit_critical(void)
 {
 	ulwp_t *self = curthread;
 	int sig;
@@ -2352,13 +2352,13 @@ _sigon(void)
 }
 
 int
-thr_getconcurrency()
+thr_getconcurrency(void)
 {
 	return (thr_concurrency);
 }
 
 int
-pthread_getconcurrency()
+pthread_getconcurrency(void)
 {
 	return (pthread_concurrency);
 }
@@ -2849,7 +2849,7 @@ thr_suspend_mutator(thread_t tid)
  */
 #pragma weak _thr_continue_allmutators = thr_continue_allmutators
 int
-thr_continue_allmutators()
+thr_continue_allmutators(void)
 {
 	ulwp_t *self = curthread;
 	uberdata_t *udp = self->ul_uberdata;
@@ -2939,7 +2939,7 @@ thr_probe_setup(void *data)
 }
 
 static void *
-_thread_probe_getfunc()
+_thread_probe_getfunc(void)
 {
 	return (curthread->ul_tpdp);
 }

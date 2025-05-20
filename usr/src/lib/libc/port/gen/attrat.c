@@ -61,7 +61,7 @@ __openattrdirat(int fd, const char *name)
 }
 
 static int
-attrat_init()
+attrat_init(void)
 {
 	void *packer;
 	void *sizer;

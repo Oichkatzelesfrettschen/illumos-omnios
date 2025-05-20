@@ -215,7 +215,7 @@ getnetgrent(machinep, namep, domainp)
 }
 
 int
-endnetgrent()
+endnetgrent(void)
 {
 	callout_lock_enter();
 	if (getnetgrent_backend != 0) {

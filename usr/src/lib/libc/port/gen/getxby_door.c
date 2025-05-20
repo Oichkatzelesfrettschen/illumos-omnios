@@ -139,7 +139,7 @@ _nsc_use_backdoor(char *db)
  * flush private db lists
  */
 static void
-_nsc_flush_private_db()
+_nsc_flush_private_db(void)
 {
 	if (nsc_db_buf != NULL) {
 		libc_free((void *)nsc_db_buf);
@@ -694,7 +694,7 @@ _nsc_resizedoorbuf(size_t bsize)
  * If it is set the appropriate flags and allow policy reconfiguration.
  */
 int
-_nsc_proc_is_cache()
+_nsc_proc_is_cache(void)
 {
 	psinfo_t	pinfo;
 	char		fname[128];

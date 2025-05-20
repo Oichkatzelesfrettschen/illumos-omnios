@@ -49,7 +49,7 @@ free_spbuf(void *arg)
 }
 
 static nss_XbyY_buf_t *
-get_spbuf()
+get_spbuf(void)
 {
 	nss_XbyY_buf_t **buffer =
 	    tsdalloc(_T_SPBUF, sizeof (nss_XbyY_buf_t *), free_spbuf);

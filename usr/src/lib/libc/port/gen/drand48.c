@@ -193,7 +193,7 @@ EXPORT1(long, jrand48, _jrand48_u)
  */
 #include <stdio.h>
 
-main()
+main(void)
 {
 	int i;
 

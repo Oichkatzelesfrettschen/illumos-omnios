@@ -313,7 +313,7 @@ nss_cfgcn_cmp(const char *cfgname, const char *compname)
 
 /* init configuration arena */
 static int
-nss_cfg_init()
+nss_cfg_init(void)
 {
 	nss_cfglist_t *cfg;
 	int i;
@@ -621,7 +621,7 @@ nss_config(nss_config_t **plist, int cnt)
  */
 
 static int
-nss_cfg_policy_init()
+nss_cfg_policy_init(void)
 {
 	nss_config_t	*next = &nss_policy_params[0];
 
@@ -724,7 +724,7 @@ __parse_environment(struct option *opt, char *p)
 
 static
 void
-nss_get_environment()
+nss_get_environment(void)
 {
 	char *p;
 
@@ -742,7 +742,7 @@ nss_get_environment()
  * "cur_cache_lock" held) and is done once, (then "checked_env" is set)
  */
 void
-__nis_get_environment()
+__nis_get_environment(void)
 {
 	char *p;
 
@@ -1005,7 +1005,7 @@ _nss_db_state_destr(struct nss_db_state *s)
  * it with the switch maintainers.
  */
 static uint_t *
-_nss_status_vec_p()
+_nss_status_vec_p(void)
 {
 	return (tsdalloc(_T_NSS_STATUS_VEC, sizeof (uint_t), NULL));
 }

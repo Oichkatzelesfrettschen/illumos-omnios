@@ -144,7 +144,7 @@ static unsigned int crunch(POINTER);
 #ifdef DRIVER
 static void hdump();
 
-main()
+main(void)
 {
 	char line[80];	/* Room for the input line */
 	int i = 0;		/* Data generator */

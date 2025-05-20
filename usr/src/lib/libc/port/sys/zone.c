@@ -247,7 +247,7 @@ zone_list_datalink(zoneid_t zoneid, int *dlnump, datalink_id_t *linkids)
 }
 
 const char *
-zone_get_nroot()
+zone_get_nroot(void)
 {
 	uberdata_t *udp = curthread->ul_uberdata;
 	return (udp->ub_broot);

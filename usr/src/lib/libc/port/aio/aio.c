@@ -270,7 +270,7 @@ _kaio_cleanup_thread(void *arg)
  * initialize kaio.
  */
 void
-_kaio_init()
+_kaio_init(void)
 {
 	int error;
 	sigset_t oset;

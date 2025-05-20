@@ -164,7 +164,7 @@ alloc_sync_addr(void *addr)
 }
 
 static void
-initialize_sync_hash()
+initialize_sync_hash(void)
 {
 	uberdata_t *udp = curthread->ul_uberdata;
 	tdb_t *tdbp = &udp->tdb;

@@ -314,7 +314,7 @@ __tls_get_addr(TLS_index *tls_index)
  * Constructors for initially allocated static TLS are called here.
  */
 void
-tls_setup()
+tls_setup(void)
 {
 	ulwp_t *self = curthread;
 	tls_metadata_t *tlsm = &self->ul_uberdata->tls_metadata;
@@ -369,7 +369,7 @@ tls_setup()
  * Destructors for all allocated TLS are called here.
  */
 void
-tls_exit()
+tls_exit(void)
 {
 	ulwp_t *self = curthread;
 	tls_metadata_t *tlsm = &self->ul_uberdata->tls_metadata;
