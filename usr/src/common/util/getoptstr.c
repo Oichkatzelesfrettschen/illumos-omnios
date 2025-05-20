@@ -105,7 +105,7 @@ getoptstr(struct gos_params *params)
 		/* Check for "--" */
 		if (strp[1] == '-' && ISNTWORDCH(strp[2])) {
 			params->gos_strp = &strp[2];
-			SKIP_SPC(params->gos_strp);
+                       skip_spc(&params->gos_strp);
 			return (-1);
 		}
 	}
@@ -117,7 +117,7 @@ getoptstr(struct gos_params *params)
 		++params->gos_pos;
 		if (ISNTWORDCH(strp[params->gos_pos])) {
 			params->gos_strp = &strp[params->gos_pos];
-			SKIP_SPC(params->gos_strp);
+                       skip_spc(&params->gos_strp);
 			params->gos_pos = 1;
 		}
 		return ('?');
@@ -130,7 +130,7 @@ getoptstr(struct gos_params *params)
 
 		if (ISNTWORDCH(*params->gos_strp)) {
 			/* The argument is in the next word. */
-			SKIP_SPC(params->gos_strp);
+                       skip_spc(&params->gos_strp);
 
 			if (*params->gos_strp == '\0') {
 				/* Not.  Missing argument. */
@@ -143,16 +143,16 @@ getoptstr(struct gos_params *params)
 		params->gos_optargp = params->gos_strp;
 
 		/* Advance to the next word. */
-		SKIP_WORD(params->gos_strp);
+               skip_word(&params->gos_strp);
 		params->gos_optarglen = params->gos_strp - params->gos_optargp;
-		SKIP_SPC(params->gos_strp);
+               skip_spc(&params->gos_strp);
 
 		params->gos_pos = 1;
 	} else {
 		++params->gos_pos;
 		if (ISNTWORDCH(strp[params->gos_pos])) {
 			params->gos_strp = &strp[params->gos_pos];
-			SKIP_SPC(params->gos_strp);
+                       skip_spc(&params->gos_strp);
 			params->gos_pos = 1;
 		}
 		params->gos_optargp = NULL;
