@@ -50,6 +50,8 @@
 
 #include <sys/hyperv_busdma.h>
 #include <sys/hyperv_illumos.h>
+#include <stdbool.h>
+#include <stdint.h>
 
 /*
  * Specify the SINTs (synthetic interrupt sources) to use for vmbus messages
@@ -149,11 +151,11 @@ struct vmbus_softc {
 #define	VMBUS_PCPU_PTR(sc, field, cpu)	&(sc)->vmbus_pcpu[(cpu)].field
 
 #ifdef DEBUG
-extern int vmbus_debug;
+extern bool vmbus_debug;
 
 #define	VMBUS_DEBUG(sc, ...)						\
 	do {								\
-		if (__predict_false(vmbus_debug > 0)) {			\
+		if (__predict_false(vmbus_debug)) {			\
 			dev_err((sc)->vmbus_dev, CE_CONT, __VA_ARGS__);	\
 		}							\
 	} while (0)

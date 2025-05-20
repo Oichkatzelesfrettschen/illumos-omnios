@@ -61,14 +61,16 @@
 #include <sys/x86_archext.h>
 #include <sys/sunndi.h>
 #include <sys/ddi_subrdefs.h>
+#include <stdint.h>
+#include <stdbool.h>
 
 #define	curcpu	CPU->cpu_id
 
 #define	VMBUS_GPADL_START		0xe1e10
 
 #ifdef	DEBUG
-int vmbus_debug = 0;
-int vmbus_ndi_debug = 0;
+bool vmbus_debug = false;
+bool vmbus_ndi_debug = false;
 #endif
 
 struct vmbus_msghc {
@@ -134,8 +136,8 @@ vmbus_msghc_reset(struct vmbus_msghc *mh, size_t dsize)
 {
 	struct hypercall_postmsg_in *inprm;
 
-	if (dsize > HYPERCALL_POSTMSGIN_DSIZE_MAX)
-		panic("invalid data size %llu", (u_longlong_t)dsize);
+        if (dsize > HYPERCALL_POSTMSGIN_DSIZE_MAX)
+                panic("invalid data size %llu", (unsigned long long)dsize);
 
 	inprm = vmbus_xact_req_data(mh->mh_xact);
 	(void) memset(inprm, 0, HYPERCALL_POSTMSGIN_SIZE);
@@ -150,8 +152,8 @@ vmbus_msghc_get(struct vmbus_softc *sc, size_t dsize)
 	struct vmbus_msghc *mh = NULL;
 	struct vmbus_xact *xact;
 
-	if (dsize > HYPERCALL_POSTMSGIN_DSIZE_MAX)
-		panic("invalid data size %llu", (u_longlong_t)dsize);
+        if (dsize > HYPERCALL_POSTMSGIN_DSIZE_MAX)
+                panic("invalid data size %llu", (unsigned long long)dsize);
 
 	xact = vmbus_xact_get(sc->vmbus_xc,
 	    dsize + offsetof(struct hypercall_postmsg_in, hc_data[0]));
@@ -882,8 +884,8 @@ vmbus_synic_setup(void *xsc)
 		orig = rdmsr(sint);
 		val = sc->vmbus_idtvec | MSR_HV_SINT_AUTOEOI |
 		    (orig & MSR_HV_SINT_RSVD_MASK);
-		dev_err(sc->vmbus_dev, CE_CONT, "?SINT val %llx\n",
-		    (u_longlong_t)val);
+                dev_err(sc->vmbus_dev, CE_CONT, "?SINT val %llx\n",
+                    (unsigned long long)val);
 		wrmsr(sint, val);
 
 		/*
