@@ -50,12 +50,12 @@ $(SPARC_BLD)psm: stand
 
 SUBDIRS= $(COMMON_SUBDIRS) $($(MACH)_SUBDIRS)
 
-HDRSUBDIRS=	uts head lib cmd
+HDRSUBDIRS=	exokernel head lib cmd
 
 # UCB headers are bug-for-bug compatible and not checkable against the header
 # standards.
 #
-CHKHDRSUBDIRS=	head uts lib
+CHKHDRSUBDIRS=	head exokernel lib
 
 #
 # Headers that can be built in parallel
@@ -65,7 +65,7 @@ PARALLEL_HEADERS = sysheaders userheaders libheaders cmdheaders
 #
 # Directories that can be built in parallel
 #
-PARALLEL_DIRS = data uts lib man
+PARALLEL_DIRS = data exokernel lib man
 
 # The check target also causes smf(7) service manifests to be validated.
 CHKMFSTSUBDIRS=	cmd
@@ -196,7 +196,9 @@ setup: closedbins bldtools sgs mapfiles
 # tools build.
 #
 bldtools:
-	@cd tools; pwd; $(MAKE) RELEASE_BUILD= install
+       @cd tools; pwd; $(MAKE) RELEASE_BUILD= install
+       @cd exokernel; pwd; $(MAKE) bldtools
+       @cd modules; pwd; $(MAKE) bldtools
 
 # /var/mail/:saved is a special case because of the colon in the name.
 #
@@ -213,7 +215,7 @@ libheaders: bldtools
 	@cd lib; pwd; $(MAKE) install_h
 
 sysheaders: FRC
-	@cd uts; pwd; $(MAKE) install_h
+	@cd exokernel; pwd; $(MAKE) install_h
 
 cmdheaders: FRC
 	@cd cmd/devfsadm; pwd; $(MAKE) install_h
@@ -229,7 +231,7 @@ check:	$(CHKHDRSUBDIRS) $(CHKMFSTSUBDIRS) $(CHKMANSUBDIRS)
 # don't contain actual source code.
 #
 XRPRUNE = pkg prototypes
-XRINCDIRS = uts/common head ucbhead
+XRINCDIRS = exokernel/common modules/common head ucbhead
 
 include Makefile.xref
 
