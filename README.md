@@ -49,6 +49,10 @@ OmniOS maintains its own policies for the standard C library.  All changes to
 libc must follow the locking and memory allocation rules documented in
 [`usr/src/lib/libc/README`](usr/src/lib/libc/README).
 
+libc code must be written so that it remains async-signal-safe and
+fork-safe.  When holding the `l*` locking primitives, any required memory
+allocations must use the internal `lmalloc()` or `libc_malloc()` family.
+
 ## Hardware variants
 
 Some libraries ship hardware-optimised variants that the runtime linker
