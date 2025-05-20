@@ -44,9 +44,26 @@ extern "C" {
  * These macros are defined here so getoptstr() callers can handle spaces and
  * words consistently.
  */
-#define	ISSPACE(c)	((c) == ' ' || (c) == '\t')
-#define	SKIP_WORD(cp)	while (*cp != '\0' && !ISSPACE(*cp)) ++cp;
-#define	SKIP_SPC(cp)	while (ISSPACE(*cp)) ++cp;
+static inline int
+isspace_ascii(int c)
+{
+    return (c == ' ' || c == '\t');
+}
+
+static inline void
+skip_word(const char **restrict cp)
+{
+    while (**cp != '\0' && !isspace_ascii(**cp))
+        (*cp)++;
+}
+
+static inline void
+skip_spc(const char **restrict cp)
+{
+    while (isspace_ascii(**cp))
+        (*cp)++;
+}
+    return (c == 
 
 
 struct gos_params {

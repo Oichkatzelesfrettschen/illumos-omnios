@@ -69,10 +69,10 @@ bootflags(struct bootops *ops)
 		    cp[2] == 'd' && cp[3] == 'b' &&
 		    (cp[4] == ' ' || cp[4] == '	' || cp[4] == 0))
 			boothowto |= RB_KMDB;
-		SKIP_WORD(cp);		/* Skip the kernel's filename. */
+		skip_word(&cp);		/* Skip the kernel's filename. */
 	}
 #endif
-	SKIP_SPC(cp);
+	skip_spc(&cp);
 
 #if defined(_OBP)
 	/* skip bootblk args */

@@ -33,7 +33,7 @@
 extern "C" {
 #endif
 
-extern void *memcpy(void *, const void *, size_t);
+extern void *memcpy(void *restrict, const void *restrict, size_t);
 
 #ifdef __cplusplus
 }

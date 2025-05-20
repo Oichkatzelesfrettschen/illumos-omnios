@@ -430,7 +430,7 @@ extern int bcmp(const void *, const void *, size_t);
 extern void bcopy(const void *, void *, size_t);
 extern void bzero(void *, size_t);
 
-extern void *memcpy(void *, const void *, size_t);
+extern void *memcpy(void *restrict, const void *restrict, size_t);
 extern void *memmove(void *, const void *, size_t);
 extern int memcmp(const void *, const void *, size_t);
 /* Need to be consistent with <string.h> C++ definitions */

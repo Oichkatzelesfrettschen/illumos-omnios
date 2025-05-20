@@ -49,10 +49,10 @@ extern void getopt_reset(void);
 
 extern void *memchr(const void *, int, size_t);
 extern int memcmp(const void *, const void *, size_t);
-extern void *memcpy(void *, const void *, size_t);
+extern void *memcpy(void *restrict, const void *restrict, size_t);
 extern void *memccpy(void *, const void *, int, size_t);
 extern void *memmove(void *, const void *, size_t);
-extern void *memset(void *, int, size_t);
+extern void *memset(void *restrict, int, size_t);
 
 extern void qsort(void *, size_t, size_t, int (*)(const void *,
     const void *));

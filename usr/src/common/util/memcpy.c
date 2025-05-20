@@ -54,11 +54,11 @@
  * Return s
  */
 void *
-memcpy(void *s, const void *s0, size_t n)
+memcpy(void *restrict s, const void *restrict s0, size_t n)
 {
-	if (n != 0) {
-		char *s1 = s;
-		const char *s2 = s0;
+        if (n != 0) {
+                char *restrict s1 = s;
+                const char *restrict s2 = s0;
 
 		do {
 			*s1++ = *s2++;

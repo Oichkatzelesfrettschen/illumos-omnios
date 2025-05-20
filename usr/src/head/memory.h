@@ -51,8 +51,8 @@ using std::memchr;
 #else
 extern void *memchr(const void *, int, size_t);
 #endif
-extern void *memcpy(void *, const void *, size_t);
-extern void *memset(void *, int, size_t);
+extern void *memcpy(void *restrict, const void *restrict, size_t);
+extern void *memset(void *restrict, int, size_t);
 extern int memcmp(const void *, const void *, size_t);
 
 #ifdef	__cplusplus
