@@ -1,0 +1,73 @@
+#
+# CDDL HEADER START
+#
+# The contents of this file are subject to the terms of the
+# Common Development and Distribution License (the "License").
+# You may not use this file except in compliance with the License.
+#
+# You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
+# or http://www.opensolaris.org/os/licensing.
+# See the License for the specific language governing permissions
+# and limitations under the License.
+#
+# When distributing Covered Code, include this CDDL HEADER in each
+# file and include the License file at usr/src/OPENSOLARIS.LICENSE.
+# If applicable, add the following below this CDDL HEADER, with the
+# fields enclosed by brackets "[]" replaced with your own identifying
+# information: Portions Copyright [yyyy] [name of copyright owner]
+#
+# CDDL HEADER END
+#
+#
+# lmalloc() and libc_malloc() in libc
+#
+# This document describes the private allocator implemented in
+# port/threads/alloc.c.
+#
+# Allocation buckets
+# ------------------
+#
+# Memory is allocated in power-of-two buckets.  The smallest bucket is
+# 64 bytes and each successive bucket doubles in size up to 32 Kbytes.
+# Buckets therefore provide allocations of:
+#
+#     bucket 0  - 64 bytes
+#     bucket 1  - 128 bytes
+#     bucket 2  - 256 bytes
+#     bucket 3  - 512 bytes
+#     bucket 4  - 1024 bytes
+#     bucket 5  - 2048 bytes
+#     bucket 6  - 4096 bytes
+#     bucket 7  - 8192 bytes
+#     bucket 8  - 16384 bytes
+#     bucket 9  - 32768 bytes
+#
+# Larger requests (64 Kbytes or more) are handled by mmap() and
+# munmap() directly.
+#
+# Chunk management
+# ----------------
+#
+# Allocations come from 64 Kbyte chunks (CHUNKSIZE).  On the first call
+# to lmalloc() a 24 Kbyte area is carved into small blocks so that the
+# initial buckets have some stock without needing further mmap() calls.
+# Additional space is obtained from 64 Kbyte aligned mappings as
+# required.
+#
+# Zero initialisation
+# -------------------
+#
+# Memory returned by lmalloc() is initialised to zero.  lfree() zeroes
+# memory again before returning it to the free list which keeps future
+# allocations zeroed as well.
+#
+# Choosing lmalloc vs libc_malloc
+# -------------------------------
+#
+# lmalloc() and lfree() require the caller to remember the allocation
+# size.  libc_malloc() and its companions keep the size in a small
+# header so that callers may free memory without remembering its size.
+# Both families are safe within libc critical sections and must not be
+# passed to application code that will free them.  See README for usage
+# rules.  These allocators are small and specialised and are not a
+# general-purpose replacement for malloc().

@@ -112,6 +112,8 @@ memory out of libc if the caller of libc is expected to free it.
 lmalloc()/lfree() is a small and simple power of two allocator.
 Do not use it as a general-purpose allocator.  Be kind to it.
 
+See README.lmalloc for further details of this allocator.
+
 There is a special mutual exclusion interface that exists for
 cases, like code in the I18N interfaces, where mutual exclusion
 is required but the above rules cannot be followed:
