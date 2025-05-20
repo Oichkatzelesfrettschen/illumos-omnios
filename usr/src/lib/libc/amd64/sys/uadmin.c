@@ -42,6 +42,7 @@
 #include <sys/stat.h>
 #include <sys/uadmin.h>
 #include <unistd.h>
+#include <string.h>
 #include <strings.h>
 #include <pthread.h>
 #include <zone.h>
@@ -222,9 +223,9 @@ uadmin(int cmd, int fcn, uintptr_t mdep)
 				char *newarg, *head;
 				char bargs_scratch[BOOTARGS_MAX];
 
-				bzero(bargs_scratch, BOOTARGS_MAX);
+                               memset(bargs_scratch, 0, BOOTARGS_MAX);
 
-				bcopy(bargs, bargs_scratch, strlen(bargs));
+                               memcpy(bargs_scratch, bargs, strlen(bargs));
 				head = bargs_scratch;
 				newarg = strtok(bargs_scratch, " ");
 

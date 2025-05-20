@@ -46,7 +46,7 @@ secflags_parse(const secflagset_t *defaults, const char *flags,
 	boolean_t current = B_FALSE;
 
 	/* Guarantee a clean base */
-	bzero(ret, sizeof (*ret));
+       memset(ret, 0, sizeof (*ret));
 
 	if ((ss = s = strdup(flags)) == NULL)
 		return (-1);	/* errno set for us */

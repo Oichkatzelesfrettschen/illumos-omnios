@@ -100,7 +100,7 @@ getvfsfile(FILE *fd, struct vfstab *vp, char *mountp)
 {
 	struct vfstab	vv;
 
-	bzero(&vv, (size_t)sizeof (vv));
+       memset(&vv, 0, sizeof (vv));
 	vv.vfs_mountp = mountp;
 	return (getvfsany(fd, vp, &vv));
 }

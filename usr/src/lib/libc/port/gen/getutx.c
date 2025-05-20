@@ -151,7 +151,7 @@ utmpx_frec2api(const struct futmpx *src, struct utmpx *dst)
 	dst->ut_tv.tv_sec = (time_t)src->ut_tv.tv_sec;
 	dst->ut_tv.tv_usec = (suseconds_t)src->ut_tv.tv_usec;
 	dst->ut_session = src->ut_session;
-	bzero(dst->pad, sizeof (dst->pad));
+       memset(dst->pad, 0, sizeof (dst->pad));
 	dst->ut_syslen = src->ut_syslen;
 	(void) memcpy(dst->ut_host, src->ut_host, sizeof (dst->ut_host));
 }
@@ -172,7 +172,7 @@ utmpx_api2frec(const struct utmpx *src, struct futmpx *dst)
 	dst->ut_tv.tv_sec = (time32_t)src->ut_tv.tv_sec;
 	dst->ut_tv.tv_usec = (int32_t)src->ut_tv.tv_usec;
 	dst->ut_session = src->ut_session;
-	bzero(dst->pad, sizeof (dst->pad));
+       memset(dst->pad, 0, sizeof (dst->pad));
 	dst->ut_syslen = src->ut_syslen;
 	(void) memcpy(dst->ut_host, src->ut_host, sizeof (dst->ut_host));
 }
@@ -227,7 +227,7 @@ getutxent_frec(void)
 		/*
 		 * Make sure fubuf is zeroed.
 		 */
-		bzero(&fubuf, sizeof (fubuf));
+               memset(&fubuf, 0, sizeof (fubuf));
 		return (NULL);
 	}
 
@@ -730,8 +730,8 @@ setutxent(void)
 	 * Zero the stored copy of the last entry read, since we are
 	 * resetting to the beginning of the file.
 	 */
-	bzero(&ubuf, sizeof (ubuf));
-	bzero(&fubuf, sizeof (fubuf));
+       memset(&ubuf, 0, sizeof (ubuf));
+       memset(&fubuf, 0, sizeof (fubuf));
 }
 
 /*
@@ -762,8 +762,8 @@ endutxent(void)
 		(void) fclose(fp);
 	fp = NULL;
 
-	bzero(&ubuf, sizeof (ubuf));
-	bzero(&fubuf, sizeof (fubuf));
+       memset(&ubuf, 0, sizeof (ubuf));
+       memset(&fubuf, 0, sizeof (fubuf));
 }
 
 /*
@@ -779,7 +779,7 @@ endutent(void)
 	}
 
 	endutxent();
-	bzero(&utmpcompat, sizeof (utmpcompat));
+       memset(&utmpcompat, 0, sizeof (utmpcompat));
 }
 
 /*
@@ -1360,10 +1360,10 @@ void
 getutmpx(const struct utmp *ut, struct utmpx *utx)
 {
 	(void) memcpy(utx->ut_user, ut->ut_user, sizeof (ut->ut_user));
-	(void) bzero(&utx->ut_user[sizeof (ut->ut_user)],
+       (void) memset(&utx->ut_user[sizeof (ut->ut_user)], 0,
 	    sizeof (utx->ut_user) - sizeof (ut->ut_user));
 	(void) memcpy(utx->ut_line, ut->ut_line, sizeof (ut->ut_line));
-	(void) bzero(&utx->ut_line[sizeof (ut->ut_line)],
+       (void) memset(&utx->ut_line[sizeof (ut->ut_line)], 0,
 	    sizeof (utx->ut_line) - sizeof (ut->ut_line));
 	(void) memcpy(utx->ut_id, ut->ut_id, sizeof (ut->ut_id));
 	utx->ut_pid = ut->ut_pid;
@@ -1372,8 +1372,8 @@ getutmpx(const struct utmp *ut, struct utmpx *utx)
 	utx->ut_tv.tv_sec = ut->ut_time;
 	utx->ut_tv.tv_usec = 0;
 	utx->ut_session = 0;
-	bzero(utx->pad, sizeof (utx->pad));
-	bzero(utx->ut_host, sizeof (utx->ut_host));
+       memset(utx->pad, 0, sizeof (utx->pad));
+       memset(utx->ut_host, 0, sizeof (utx->ut_host));
 	utx->ut_syslen = 0;
 }
 

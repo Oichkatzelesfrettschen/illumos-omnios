@@ -157,7 +157,7 @@ getmntany(FILE *fp, struct mnttab *mgetp, struct mnttab *mrefp)
 		errno = ENOMEM;
 		return (-1);
 	}
-	bzero(mgetp, sizeof (struct mnttab));
+       memset(mgetp, 0, sizeof (struct mnttab));
 	if (mrefp->mnt_special) {
 		mgetp->mnt_special = copyp;
 		copyp += snprintf(mgetp->mnt_special, MNT_LINE_MAX, "%s",

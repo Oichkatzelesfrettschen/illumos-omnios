@@ -31,6 +31,7 @@
 #include "lint.h"
 #include "thr_uberdata.h"
 #include <sys/ctype.h>
+#include <string.h>
 #include <strings.h>
 #include <sched.h>
 
@@ -488,7 +489,7 @@ pthread_attr_setname_np(pthread_attr_t *attr, const char *name)
 		return (EINVAL);
 
 	if (name == NULL) {
-		bzero(ap->name, sizeof (ap->name));
+               memset(ap->name, 0, sizeof (ap->name));
 		return (0);
 	}
 
@@ -507,7 +508,7 @@ pthread_attr_setname_np(pthread_attr_t *attr, const char *name)
 	 * not having garbage after the end of the string simplifies attr
 	 * comparison
 	 */
-	bzero(ap->name, sizeof (ap->name));
+       memset(ap->name, 0, sizeof (ap->name));
 	(void) strlcpy(ap->name, name, sizeof (ap->name));
 	return (0);
 }
