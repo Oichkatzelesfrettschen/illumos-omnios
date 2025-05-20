@@ -22,7 +22,7 @@
 #include <dirent.h>
 
 int
-inotify_init()
+inotify_init(void)
 {
 	return (open("/dev/inotify", O_RDWR));
 }

@@ -35,7 +35,7 @@
 #include "fp.h"
 
 fp_except
-fpgetmask()
+fpgetmask(void)
 {
 	struct _cw87 cw;
 

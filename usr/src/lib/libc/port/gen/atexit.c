@@ -79,14 +79,14 @@ extern	caddr_t	_getfp(void);
  * Do not use curthread->ul_uberdata->atexit_root for these.
  */
 void
-atexit_locks()
+atexit_locks(void)
 {
 	(void) mutex_lock(&__uberdata.atexit_root.exitfns_lock);
 	(void) mutex_lock(&__uberdata.quickexit_root.exitfns_lock);
 }
 
 void
-atexit_unlocks()
+atexit_unlocks(void)
 {
 	(void) mutex_unlock(&__uberdata.quickexit_root.exitfns_lock);
 	(void) mutex_unlock(&__uberdata.atexit_root.exitfns_lock);

@@ -35,7 +35,7 @@
 #include "fp.h"
 
 fp_rnd
-fpgetround()
+fpgetround(void)
 {
 	struct _cw87 cw;
 

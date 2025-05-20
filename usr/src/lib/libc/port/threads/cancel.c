@@ -214,7 +214,7 @@ pthread_testcancel(void)
  * points and are about to block, such as cond_wait().
  */
 void
-_cancelon()
+_cancelon(void)
 {
 	ulwp_t *self = curthread;
 
@@ -232,7 +232,7 @@ _cancelon()
  * It is called from functions which are cancellation points, like cond_wait().
  */
 void
-_canceloff()
+_canceloff(void)
 {
 	ulwp_t *self = curthread;
 
@@ -250,7 +250,7 @@ _canceloff()
  * This is used by cond_wait() and sema_wait() when they don't get EINTR.
  */
 void
-_canceloff_nocancel()
+_canceloff_nocancel(void)
 {
 	ulwp_t *self = curthread;
 

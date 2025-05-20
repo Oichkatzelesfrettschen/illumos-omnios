@@ -31,7 +31,7 @@
 #include "thr_uberdata.h"
 
 int *
-___errno()
+___errno(void)
 {
 	return (curthread->ul_errnop);
 }

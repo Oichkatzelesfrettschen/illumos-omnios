@@ -52,7 +52,7 @@ free_pwbuf(void *arg)
 }
 
 static nss_XbyY_buf_t *
-get_pwbuf()
+get_pwbuf(void)
 {
 	nss_XbyY_buf_t **buffer =
 	    tsdalloc(_T_PWBUF, sizeof (nss_XbyY_buf_t *), free_pwbuf);

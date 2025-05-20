@@ -160,7 +160,7 @@ __cleanup(void)		/* called at process end to flush ouput streams */
  * For fork1-safety (see libc_prepare_atfork(), etc).
  */
 void
-stdio_locks()
+stdio_locks(void)
 {
 	(void) mutex_lock(&_first_link_lock);
 	/*
@@ -169,7 +169,7 @@ stdio_locks()
 }
 
 void
-stdio_unlocks()
+stdio_unlocks(void)
 {
 	/*
 	 * XXX: We should release all of the iob locks here.

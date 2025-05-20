@@ -2436,7 +2436,7 @@ reload_counter(void)
  * /etc/default/init file to get the value.
  */
 static const char *
-getsystemTZ()
+getsystemTZ(void)
 {
 	tznmlist_t *tzn;
 	char	*tz;

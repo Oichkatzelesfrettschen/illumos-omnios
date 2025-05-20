@@ -125,7 +125,7 @@ envsize(const char **e)
  * calling us because we test these again whilst holding update_lock.
  */
 static void
-initenv()
+initenv(void)
 {
 	if ((my_environ != _environ) || !initenv_done) {
 		lmutex_lock(&update_lock);

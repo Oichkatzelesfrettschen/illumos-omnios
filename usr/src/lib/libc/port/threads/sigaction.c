@@ -731,7 +731,7 @@ sigprocmask(int how, const sigset_t *set, sigset_t *oset)
  * then inform the kernel of the new sigacthandler.
  */
 void
-signal_init()
+signal_init(void)
 {
 	uberdata_t *udp = curthread->ul_uberdata;
 	struct sigaction *sap;

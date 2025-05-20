@@ -381,7 +381,7 @@ _thr_slot_offset(thread_key_t key)
  * This is called by _thrp_exit() to apply destructors to the thread's tsd.
  */
 void
-tsd_exit()
+tsd_exit(void)
 {
 	ulwp_t *self = curthread;
 	tsd_metadata_t *tsdm = &self->ul_uberdata->tsd_metadata;

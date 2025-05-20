@@ -46,7 +46,7 @@
  * set to 0 and no check will be done in the kernel interface.
  */
 int
-port_create()
+port_create(void)
 {
 	rval_t	r;
 	r.r_vals = _portfs(PORT_CREATE | PORT_SYS_NOPORT, 0, 0, 0, 0, 0);

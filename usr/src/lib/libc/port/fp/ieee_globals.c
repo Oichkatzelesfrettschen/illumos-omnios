@@ -59,25 +59,25 @@ typedef struct {
 #define	fpvars	((fpvars_t *)tsdalloc(_T_FP_GET, sizeof (fpvars_t), NULL))
 
 int *
-_thrp_get_nan_written()
+_thrp_get_nan_written(void)
 {
 	return (thr_main() ? &__nan_written : &fpvars->__nan_written);
 }
 
 int *
-_thrp_get_nan_read()
+_thrp_get_nan_read(void)
 {
 	return (thr_main() ? &__nan_read : &fpvars->__nan_read);
 }
 
 int *
-_thrp_get_inf_written()
+_thrp_get_inf_written(void)
 {
 	return (thr_main() ? &__inf_written : &fpvars->__inf_written);
 }
 
 int *
-_thrp_get_inf_read()
+_thrp_get_inf_read(void)
 {
 	return (thr_main() ? &__inf_read : &fpvars->__inf_read);
 }

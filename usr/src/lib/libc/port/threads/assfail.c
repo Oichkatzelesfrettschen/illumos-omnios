@@ -59,7 +59,7 @@ __set_panicstr(const char *msg)
  * to assertion failures and a core dump over _exit().
  */
 void
-grab_assert_lock()
+grab_assert_lock(void)
 {
 	(void) _lwp_mutex_lock(&assert_lock);
 }

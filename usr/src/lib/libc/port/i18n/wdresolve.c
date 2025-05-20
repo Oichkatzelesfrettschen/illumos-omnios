@@ -116,7 +116,7 @@ C_fallback:
  */
 /* XXX: wdinit() is not exported from libc.  Should it be? */
 int
-wdinit()
+wdinit(void)
 {
 	int res;
 
