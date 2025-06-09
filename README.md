@@ -10,7 +10,8 @@ the same version. See the
 information.
 
 For documentation builds, run `./rootsetup` to install additional tooling such
-as Doxygen and Sphinx.
+as Doxygen and Sphinx. Continuous integration environments can invoke
+`tools/check_docs.sh` to generate documentation and report warnings.
 
 ## Contributing
 
