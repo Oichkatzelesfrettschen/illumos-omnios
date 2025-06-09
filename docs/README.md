@@ -9,6 +9,16 @@ doxygen docs/Doxyfile
 
 Once Doxygen completes, build the HTML documentation via Sphinx:
 
+The repository also provides a helper script that runs Doxygen and
+reports any warnings while quantifying documentation coverage. Execute:
+
+```sh
+tools/check_docs.sh
+```
+
+After Doxygen generates XML output, build the Sphinx documentation:
+
+
 ```sh
 cd docs/sphinx
 make html
