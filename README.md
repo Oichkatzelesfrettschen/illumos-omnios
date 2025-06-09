@@ -9,8 +9,12 @@ the same version. See the
 [build instructions](https://omnios.org/dev/build_instructions) for further
 information.
 
-For documentation builds, run `./rootsetup` to install additional tooling such
-as Doxygen and Sphinx.
+For documentation builds, run `./rootsetup` to install the tools required for
+generating the manual. This script adds Doxygen, Sphinx, the Breathe
+extension, CLOC, qemu, and tmux. Once installed, create the Doxygen XML by
+running `doxygen docs/Doxyfile` and then invoke `sphinx-build docs/sphinx
+docs/html` to generate the HTML output. If a `docs/Makefile` is added, you can
+simply run `make html` in that directory instead.
 
 ## Contributing
 
