@@ -38,6 +38,15 @@ __FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 
+/**
+ * @file memset.c
+ * @brief Shared implementation for memset and bzero.
+ *
+ * The file is included with different macros defined so that the same
+ * code can implement both functions. When compiled with @c BZERO defined
+ * the resulting function is @c bzero; otherwise it provides @c memset.
+ */
+
 #include <limits.h>
 
 #define	wsize	sizeof(u_int)
@@ -50,8 +59,13 @@ __FBSDID("$FreeBSD$");
 #define	VAL	0
 #define	WIDEVAL	0
 
-void
-bzero(void *dst0, size_t length)
+/**
+ * Fill a region of memory with zeros.
+ *
+ * @param dst0   destination memory pointer
+ * @param length number of bytes to clear
+ */
+void bzero(void *dst0, size_t length)
 #else
 #include <string.h>
 
@@ -59,8 +73,16 @@ bzero(void *dst0, size_t length)
 #define	VAL	c0
 #define	WIDEVAL	c
 
-void *
-memset(void *dst0, int c0, size_t length)
+/**
+ * Set each byte of a memory region to a given value.
+ *
+ * @param dst0   destination memory pointer
+ * @param c0     value to set each byte to
+ * @param length number of bytes to modify
+ *
+ * @return pointer to @p dst0
+ */
+void *memset(void *dst0, int c0, size_t length)
 #endif
 {
 	size_t t;

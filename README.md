@@ -9,6 +9,9 @@ the same version. See the
 [build instructions](https://omnios.org/dev/build_instructions) for further
 information.
 
+For documentation builds, run `./rootsetup` to install additional tooling such
+as Doxygen and Sphinx.
+
 ## Contributing
 
 The OmniOS fork is regularly updated with changes from the upstream
