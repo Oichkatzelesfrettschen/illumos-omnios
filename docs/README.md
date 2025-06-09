@@ -6,4 +6,12 @@ This repository uses Doxygen to generate API references and Sphinx for prose doc
 doxygen docs/Doxyfile
 ```
 
-Sphinx integration is expected via the Breathe extension once available.
+After Doxygen generates XML output, build the Sphinx documentation:
+
+```sh
+cd docs/sphinx
+make html
+```
+
+The configuration in `docs/sphinx/conf.py` integrates the Breathe extension
+and targets the Read the Docs theme for a uniform appearance.
