@@ -1,7 +1,8 @@
 # Documentation
 
-This repository uses Doxygen to generate API references and Sphinx for prose documentation. Run the following after installing the dependencies listed in `rootsetup`:
+This repository uses Doxygen to generate API references and Sphinx for prose documentation. Run the following after installing the dependencies listed in `setup.sh`:
 
+The script uses apt, pip, and npm to ensure all tooling is available.
 ```sh
 doxygen docs/Doxyfile
 ```
