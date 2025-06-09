@@ -6,6 +6,13 @@ This repository uses Doxygen to generate API references and Sphinx for prose doc
 doxygen docs/Doxyfile
 ```
 
+The repository also provides a helper script that runs Doxygen and
+reports any warnings while quantifying documentation coverage. Execute:
+
+```sh
+tools/check_docs.sh
+```
+
 After Doxygen generates XML output, build the Sphinx documentation:
 
 ```sh

@@ -24,6 +24,7 @@
 /.vscode
 # BEGIN AUTO-GENERATED
 tools/
+!tools/check_docs.sh
 usr/src/cmd/bhhwcompat/bhhwcompat
 usr/src/cmd/cdpadm/cdpadm
 usr/src/cmd/cmd-inet/usr.lib/in.cdpd/in.cdpd
