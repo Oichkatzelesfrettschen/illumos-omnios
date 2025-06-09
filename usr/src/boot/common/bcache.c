@@ -90,8 +90,13 @@ static void	bcache_invalidate(struct bcache *bc, daddr_t blkno);
 static void	bcache_insert(struct bcache *bc, daddr_t blkno);
 static void	bcache_free_instance(struct bcache *bc);
 
-/*
- * Initialise the cache for (nblks) of (bsize).
+/**
+ * Initialize the global block cache parameters.
+ *
+ * @param nblks  total number of cacheable blocks
+ * @param bsize  size of a single cache block in bytes
+ *
+ * Updates @c bcache_total_nblks and @c bcache_blksize.
  */
 void
 bcache_init(size_t nblks, size_t bsize)
@@ -101,13 +106,16 @@ bcache_init(size_t nblks, size_t bsize)
 	bcache_blksize = bsize;
 }
 
-/*
- * add number of devices to bcache. we have to divide cache space
- * between the devices, so bcache_add_dev() can be used to set up the
- * number. The issue is, we need to get the number before actual allocations.
- * bcache_add_dev() is supposed to be called from device init() call, so the
- * assumption is, devsw dv_init is called for plain devices first, and
- * for zfs, last.
+/**
+ * Record the number of devices that will share the cache space.
+ *
+ * The cache space is divided equally between devices.  This function is
+ * typically called from each device's initialization routine so that the
+ * cache can size itself appropriately.
+ *
+ * @param devices  number of devices being registered
+ *
+ * Updates @c bcache_numdev.
  */
 void
 bcache_add_dev(int devices)
@@ -115,6 +123,18 @@ bcache_add_dev(int devices)
 	bcache_numdev += devices;
 }
 
+/**
+ * Allocate and initialize a cache instance for a single device.
+ *
+ * The number of blocks assigned to the instance depends on the total number
+ * of devices registered via ::bcache_add_dev().  On allocation failure
+ * ::errno is set to ::ENOMEM.
+ *
+ * @return opaque pointer to the newly created cache or @c NULL on failure.
+ *
+ * Reads @c bcache_numdev, @c bcache_total_nblks and @c bcache_blksize and
+ * updates @c bcache_unit_nblks and @c bcache_units.
+ */
 void *
 bcache_allocate(void)
 {
@@ -165,6 +185,13 @@ bcache_allocate(void)
 	return (bc);
 }
 
+/**
+ * Release a cache instance previously allocated with ::bcache_allocate().
+ *
+ * @param cache  cache pointer returned from ::bcache_allocate()
+ *
+ * Decrements @c bcache_units and frees all associated memory.
+ */
 void
 bcache_free(void *cache)
 {
@@ -177,9 +204,18 @@ bcache_free(void *cache)
 	bcache_units--;
 }
 
-/*
- * Handle a write request; write directly to the disk, and populate the
- * cache with the new values.
+/**
+ * Write data through the underlying device and invalidate affected cache
+ * entries.
+ *
+ * @param devdata  device specific data
+ * @param rw       read/write flags
+ * @param blk      starting block number
+ * @param size     number of bytes to write
+ * @param buf      buffer containing the data
+ * @param rsize    optional returns the number of bytes written
+ *
+ * @return result of the underlying strategy function
  */
 static int
 write_strategy(void *devdata, int rw, daddr_t blk, size_t size,
@@ -200,10 +236,21 @@ write_strategy(void *devdata, int rw, daddr_t blk, size_t size,
 	return (dd->dv_strategy(dd->dv_devdata, rw, blk, size, buf, rsize));
 }
 
-/*
- * Handle a read request; fill in parts of the request that can
- * be satisfied by the cache, use the supplied strategy routine to do
- * device I/O and then use the I/O results to populate the cache.
+/**
+ * Read data from the device while populating and consulting the block cache.
+ *
+ * Portions of the request that are already cached are served directly from
+ * memory.  Missing blocks are read from the device, optionally with
+ * read‑ahead, and then inserted into the cache.
+ *
+ * @param devdata  device specific data
+ * @param rw       read flags
+ * @param blk      starting block number
+ * @param size     number of bytes to read
+ * @param buf      destination buffer
+ * @param rsize    optional returns the number of bytes read
+ *
+ * @return result of the underlying strategy function
  */
 static int
 read_strategy(void *devdata, int rw, daddr_t blk, size_t size,
@@ -350,9 +397,20 @@ done:
 	return (result);
 }
 
-/*
- * Requests larger than 1/2 cache size will be bypassed and go
- * directly to the disk.  XXX tune this.
+/**
+ * Front end for I/O operations using the block cache.
+ *
+ * Requests larger than half of the cache size or when the cache is inactive
+ * bypass the cache entirely.
+ *
+ * @param devdata  device specific data
+ * @param rw       read/write flags
+ * @param blk      starting block number
+ * @param size     size of the transfer in bytes
+ * @param buf      data buffer
+ * @param rsize    optional returns the number of bytes transferred
+ *
+ * @return 0 on success or an error code from the underlying strategy
  */
 int
 bcache_strategy(void *devdata, int rw, daddr_t blk, size_t size,
@@ -427,8 +485,10 @@ bcache_strategy(void *devdata, int rw, daddr_t blk, size_t size,
 	return (-1);
 }
 
-/*
- * Free allocated bcache instance
+/**
+ * Free the memory associated with a cache instance.
+ *
+ * @param bc  cache instance or @c NULL
  */
 static void
 bcache_free_instance(struct bcache *bc)
@@ -440,8 +500,13 @@ bcache_free_instance(struct bcache *bc)
 	}
 }
 
-/*
- * Insert a block into the cache.
+/**
+ * Insert a block into the cache hash table.
+ *
+ * @param bc     cache instance
+ * @param blkno  block number being inserted
+ *
+ * Uses the global counter @c bcache_bcount for LRU replacement.
  */
 static void
 bcache_insert(struct bcache *bc, daddr_t blkno)
@@ -456,8 +521,11 @@ bcache_insert(struct bcache *bc, daddr_t blkno)
 	bc->bcache_ctl[cand].bc_count = bcache_bcount++;
 }
 
-/*
- * Invalidate a block from the cache.
+/**
+ * Remove a block from the cache if present.
+ *
+ * @param bc     cache instance
+ * @param blkno  block number to invalidate
  */
 static void
 bcache_invalidate(struct bcache *bc, daddr_t blkno)
@@ -474,6 +542,12 @@ bcache_invalidate(struct bcache *bc, daddr_t blkno)
 
 COMMAND_SET(bcachestat, "bcachestat", "get disk block cache stats",
     command_bcache);
+/**
+ * Implementation of the ``bcachestat'' loader command.
+ *
+ * Displays current statistics about the block cache such as hit counts and
+ * misses.
+ */
 
 static int
 command_bcache(int argc, char *argv[] __unused)
