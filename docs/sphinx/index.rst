@@ -1,7 +1,5 @@
 Illumos Documentation
 =====================
 
-.. toctree::
-   :maxdepth: 2
-
-   api
+.. doxygenindex::
+   :project: Illumos
