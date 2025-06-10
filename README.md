@@ -9,8 +9,9 @@ the same version. See the
 [build instructions](https://omnios.org/dev/build_instructions) for further
 information.
 
-For documentation builds, run `./rootsetup` to install additional tooling such
-as Doxygen and Sphinx. Continuous integration environments can invoke
+For a full development environment, execute `./setup.sh`. This installs all
+required tooling, including Doxygen and Sphinx for documentation. Continuous
+integration environments can invoke
 `tools/check_docs.sh` to generate documentation and report warnings.
 
 ## Contributing

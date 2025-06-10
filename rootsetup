@@ -1,35 +1,36 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-# Fail on first error
-set -e
+##
+# @file rootsetup
+# @brief Install base documentation build dependencies.
+#
+# This helper installs the minimal packages required for generating
+# API documentation.  It also ensures optional dependencies are
+# included when available.  The script assumes the user has sudo
+# privileges.
+##
 
-# Update package lists to fetch latest versions
+set -euo pipefail
+
+# Update package lists to fetch the latest versions.
 sudo apt-get update -y
 
-# List of core build tools and libraries
-PACKAGES="\
-    build-essential\
-    doxygen\
-    python3-sphinx\
-    python3-breathe\
-    python3-sphinx-rtd-theme\
-    cloc\
-    qemu-system-x86\
-    qemu-utils\
-"
+# Compose the package list in a single variable to ensure that
+# everything installs in one transaction. This minimises package
+# database lock contention.
+PACKAGES="build-essential doxygen python3-sphinx python3-breathe \
+python3-sphinx-rtd-theme cloc qemu-system-x86 qemu-utils"
 
-# Include python3-sphinxcontrib when provided
-if apt-cache show python3-sphinxcontrib >/dev/null 2>&1; then
+# Pull in python3-sphinxcontrib when present.
+apt-cache show python3-sphinxcontrib >/dev/null 2>&1 && \
     PACKAGES="$PACKAGES python3-sphinxcontrib"
-fi
 
-# Append preferred terminal multiplexer
+# Choose the optimal tmux flavour.
 if apt-cache show tmux-headless >/dev/null 2>&1; then
-    # Use headless variant when available
     PACKAGES="$PACKAGES tmux-headless"
 else
     PACKAGES="$PACKAGES tmux"
 fi
 
-# Install packages in one go
-sudo apt-get install -y $PACKAGES
+# Install the complete package set.
+sudo apt-get install -y "$PACKAGES"
