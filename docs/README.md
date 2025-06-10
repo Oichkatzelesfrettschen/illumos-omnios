@@ -1,7 +1,7 @@
 # Documentation
 
 This repository uses Doxygen to build API references and Sphinx for prose manuals.
-After installing the dependencies listed in `rootsetup`, generate the XML output:
+After installing the dependencies via `./setup.sh`, generate the XML output:
 
 ```sh
 doxygen docs/Doxyfile
